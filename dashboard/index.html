@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Side Nav Bar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/main.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+        }
+
+        .top-navbar {
+            background-color: #dddaf6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0px 20px 0px 60px;
+        }
+
+        .top-left {
+            display: flex;
+            align-items: center;
+            color: #fff;
+        }
+
+        .top-center {
+            display: flex;
+            align-items: center;
+            border-radius: 5px;
+            padding: 5px;
+            margin: 0 10px;
+            box-shadow: 0 0 2px 0 rgba(#000, .25), 0 0 10px 0 rgba(#000, .15);
+        }
+
+        .top-center input[type="text"] {
+            background: none;
+            border: none;
+            color: #fff;
+            width: 500px;
+            padding: 5px;
+            padding-top: 10px;
+        }
+
+        .top-center button {
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .top-right {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            padding-right: 40px;
+        }
+
+        .sidebar {
+            background-color: #786ade;
+            width: 60px;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sidebar-icon {
+            margin: 20px 0;
+            font-size: 24px;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+            padding: 10px;
+            width: 40px;
+            text-align: center;
+        }
+
+        .sidebar-icon:hover {
+            background-color: #555;
+        }
+
+
+        .main-content {
+            margin-left: 60px;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .list-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .list-items {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .list {
+            width: 350px;
+            height: 460px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .list-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            font-size: 13px;
+            border-bottom: 1px solid #786ade;
+            padding-bottom: 10px;
+        }
+
+        .list-icon {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+
+        .box-content {
+            display: flex;
+            height: 100%;
+        }
+
+        .left-content {
+            flex: 1;
+        }
+
+        .right-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .weekly-box {
+            background-color: white;
+            color: black;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+
+        .amount-box {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+
+        /* Boxes in the Center */
+        .box {
+            background-color: #fff;
+            flex: 1;
+            margin: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .box1 {
+            background-color: #fff;
+            flex: 1;
+            margin: 10px;
+            /* padding: 20px; */
+            border: 2px solid #c9c8d8;
+            height: 150px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .circle-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 30px;
+        }
+
+        .container {
+            width: 90px;
+            border: 2px solid grey;
+            border-radius: 30px;
+            height: 15px;
+            /* padding-bottom: 10px; */
+        }
+
+        .circle {
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            margin: 10px;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .percentage {
+            color: black;
+        }
+
+        .line {
+            width: 100%;
+            height: 2px;
+            background-color: #ccc;
+            margin-top: 20px;
+        }
+
+        .headline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .headline h2 {
+            font-size: 24px;
+            margin-right: 20px;
+        }
+
+        .bars {
+            display: flex;
+            width: 300px;
+            justify-content: space-between;
+        }
+
+        .bar {
+            height: 20px;
+            width: 20%;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        *,
+        *:after,
+        *:before {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --c-theme-primary: #008FFD;
+            --c-theme-primary-accent: #CBE8FF;
+            --c-bg-primary: #D6DAE0;
+            --c-bg-secondary: #EAEBEC;
+            --c-bg-tertiary: #FDFDFD;
+            --c-text-primary: #1F1F25;
+            --c-text-secondary: #999FA6;
+        }
+
+
+        button {
+            font: inherit;
+            cursor: pointer;
+
+            &:focus {
+                outline: 0;
+            }
+        }
+
+
+        .datepicker {
+            /* width: 95%; */
+            max-width: 350px;
+            background-color: var(--c-bg-tertiary);
+            border-radius: 10px;
+            box-shadow: 0 0 2px 0 rgba(#000, .2), 0 5px 10px 0 rgba(#000, .1);
+            padding: 1rem;
+        }
+
+        .datepicker-top {
+            margin-bottom: 1rem;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            margin-top: -.5rem;
+        }
+
+        .tag {
+            margin-right: .5rem;
+            margin-top: .5rem;
+            border: 0;
+            background-color: var(--c-bg-secondary);
+            border-radius: 10px;
+            padding: .5em .75em;
+            font-weight: 600;
+        }
+
+        .month-selector {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 0;
+            background-color: #FFF;
+            border-radius: 12px;
+            width: 2.5rem;
+            height: 2.5rem;
+            box-shadow: 0 0 2px 0 rgba(#000, .25), 0 0 10px 0 rgba(#000, .15);
+        }
+
+        .month-name {
+            font-weight: 600;
+        }
+
+        .datepicker-calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            grid-row-gap: 1rem;
+        }
+
+        .day,
+        .date {
+            justify-self: center;
+        }
+
+        .day {
+            color: var(--c-text-secondary);
+            font-size: .875em;
+            font-weight: 500;
+            justify-self: center;
+        }
+
+        .date {
+            border: 0;
+            padding: 0;
+            width: 2.25rem;
+            height: 2.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            font-weight: 600;
+            border: 2px solid transparent;
+            background-color: transparent;
+            cursor: pointer;
+
+            &:focus {
+                outline: 0;
+                color: var(--c-theme-primary);
+                border: 2px solid var(--c-theme-primary-accent);
+            }
+        }
+
+        .faded {
+            color: var(--c-text-secondary);
+        }
+
+        .current-day {
+            color: #FFF;
+            border-color: var(--c-theme-primary);
+            background-color: var(--c-theme-primary);
+
+            &:focus {
+                background-color: var(--c-theme-primary-accent);
+            }
+        }
+
+        .box-nav {
+            background-color: #786ade;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            padding-left: 130px;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .box-nav-text {
+            font-weight: bold;
+        }
+
+        .box-nav-icon {
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .box-table {
+            width: 100%;
+            background-color: #fff;
+            margin-top: -1px;
+            border-radius: 0 0 5px 5px;
+        }
+
+        .box-table thead th {
+            color: #5c595b;
+            font-size: 13px;
+            padding: 10px;
+        }
+
+        .box-table th,
+        .box-table td {
+            text-align: center;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .top-right-text {
+            text-align: right;
+            color: #008FFD;
+            font-weight: bold;
+        }
+
+        .bottom-right-amount {
+            text-align: right;
+            font-size: 24px;
+            font-weight: bold;
+            padding-top: 80px;
+            padding-left: 50px;
+            color: #7a6ade;
+        }
+
+        .skills {
+            text-align: right;
+            padding-bottom: 10px;
+            color: white;
+            align-items: center;
+        }
+
+        .html {
+            width: 25%;
+            background-color: #e6c119;
+            height: 12px;
+        }
+
+        .css {
+            width: 50%;
+            background-color: #786ade;
+            height: 12px;
+        }
+
+        .js {
+            width: 75%;
+            background-color: #45de82;
+            height: 12px;
+        }
+
+        .php {
+            width: 75%;
+            background-color: #45de82;
+            height: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top-navbar">
+        <div class="top-left">
+            <div class="sidebar-icon">
+                <i class="fas fa-home" style="color: #000;"></i>
+            </div>
+            <span style="color: #000; padding: 10px;">Welcome back, <strong>Username</strong></span>
+        </div>
+        <div class="top-center">
+            <div style="background-color: #ffffff; height: 32px;">
+                <input type="text" placeholder="Write here">
+                <button><i class="fas fa-search" style="color: #000;"></i></button>
+            </div>
+            <div style="padding-left: 25px;"><button
+                    style="background-color: #5420ab;height: 35px; width:100px ">Search</button></div>
+        </div>
+
+        <div class="top-right">
+            <div class="sidebar-icon">
+                <i class="fas fa-bell" style="color: #000;"></i>
+            </div>
+            <div class="sidebar-icon">
+                <i class="fas fa-cog" style="color: #000;"></i>
+            </div>
+            <div>
+                <div style="padding-left: 25px;"><button
+                        style="background-color: transparent;height: 35px; width:100px ">Search</button></div>
+            </div>
+        </div>
+    </div>
+    <div class="sidebar">
+        <div class="sidebar-icon">
+            <i class="fas fa-home"></i>
+        </div>
+        <div class="sidebar-icon">
+            <i class="fas fa-search"></i>
+        </div>
+        <div class="sidebar-icon">
+            <i class="fas fa-envelope"></i>
+        </div>
+        <div class="sidebar-icon">
+            <i class="fas fa-bell"></i>
+        </div>
+        <div class="sidebar-icon">
+            <i class="fas fa-cog"></i>
+        </div>
+        <div class="sidebar-icon">
+            <i class="fas fa-sign-out-alt"></i>
+        </div>
+    </div>
+    <div class="main-content">
+        <!-- List on the Left -->
+        <div class="list" style="width: 300px; height: 460px; padding: 30px;">
+            <ul class="list-items">
+                <li class="list-item">
+                    <i class="fas fa-check-circle list-icon"></i>
+                    CONFLICT SEARCH
+                    <i class="fa-solid fa-caret-down" style="padding-left: 40px; color: #786ade;"></i>
+                </li>
+
+                <li class="list-item">
+                    <i class="fas fa-check-circle list-icon"></i>
+                    CREATE NEW MATTER
+                    <i class="fa-solid fa-caret-down" style="padding-left: 21px; color: #786ade;"></i>
+                </li>
+                <li class="list-item">
+                    <i class="fas fa-check-circle list-icon"></i>
+                    QUICK/ADVANCE SEARCH
+                    <i class="fa-solid fa-caret-down" style="padding-left: 10px; color: #786ade;"></i>
+                </li>
+                <li class="list-item">
+                    <i class="fas fa-check-circle list-icon"></i>
+                    WORK STATION
+                    <i class="fa-solid fa-caret-down" style="padding-left: 65px; color: #786ade;"></i>
+                </li>
+                <li class="list-item">
+                    <i class="fas fa-check-circle list-icon"></i>
+                    RECENT FILES
+                    <i class="fa-solid fa-caret-down" style="padding-left: 70px; color: #786ade;"></i>
+                </li>
+                <li class="list-item">
+                    <i class="fas fa-check-circle list-icon"></i>
+                    BILLING
+                    <i class="fa-solid fa-caret-down" style="padding-left: 115px; color: #786ade;"></i>
+                </li>
+            </ul>
+        </div>
+
+        <div class="box-container">
+            <div style="display:flex;">
+                <div class="box" style="height: 240px; display: flex; width: 470px;">
+                    <div style="flex: 1;">
+                        <span class="box-nav-text"
+                            style="font-size: 12px; color: #928cac; display: block;">STATISTICS</span>
+                        <span class="box-nav-text"
+                            style="font-size: 12px; color: #928cac; display: block;">Processes</span>
+                        <div class="circle-container" style="display: flex; flex-direction: row;">
+                            <div style="text-align: center;">
+                                <div class="circle" style="border: 4px solid #e6c119;">
+                                    <div class="percentage" style="color: #e6c119;">24%</div>
+                                </div>
+                                <span style="color: #9a98a6; font-size: 14px;">Back End</span>
+                                <div style="padding-top: 8px; padding-left: 4px;">
+                                    <div
+                                        style="border: 1px solid #d1f6e0; color:#e6c119;width: 70px; border-radius: 20px; background-color: #fbf3cb; ">
+                                        overdue</div>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div class="circle" style="border: 4px solid #786ade;">
+                                    <div class="percentage" style="color: #786ade;">50%</div>
+                                </div>
+                                <span style="color: #9a98a6; font-size: 14px;">Front End</span>
+                                <div style="padding-top: 8px; padding-left: 4px;">
+                                    <div
+                                        style="border: 1px solid #d1f6e0;width: 70px; color: #7a8aec; border-radius: 20px; background-color: #dddaf6;">
+                                        overdue</div>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div class="circle" style="border: 4px solid #45de82;">
+                                    <div class="percentage" style="color: #45de82;">75%</div>
+                                </div>
+                                <span style="color: #9a98a6; font-size: 14px;">Design</span>
+                                <div style="padding-top: 8px; padding-left: 4px;">
+                                    <div
+                                        style="border: 1px solid #d1f6e0;width: 70px;color: #47de9f; border-radius: 20px; background-color: #d1f6e0;">
+                                        overdue</div>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div class="circle" style="border: 4px solid #45de82;">
+                                    <div class="percentage" style="color: #45de82;">90%</div>
+                                </div>
+                                <span style="color: #9a98a6; font-size: 14px;">Copywriting</span>
+                                <div style="padding-top: 8px; padding-left: 4px;">
+                                    <div
+                                        style="border: 1px solid #d1f6e0;width: 70px;color: #47de9f; border-radius: 20px; background-color: #d1f6e0;">
+                                        overdue</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="flex: 1; border-left: 2px solid #bdb9d8; padding-left: 20px;">
+                        <div class="bars" style="display: flex; flex-direction: column;">
+                            <span style="color: #aea9d0;">Deadlines</span>
+                            <div style="padding-top: 24px;">
+                                <span style="font-size: 10px; color: #928cac;">Backend</span>
+                                <div class="container">
+                                    <div class="skills html"></div>
+                                </div>
+
+                                <span style="font-size: 10px;color: #928cac;">Frontend</span>
+                                <div class="container">
+                                    <div class="skills css"></div>
+                                </div>
+
+                                <span style="font-size: 10px;color: #928cac;">Design</span>
+                                <div class="container">
+                                    <div class="skills js"></div>
+                                </div>
+
+                                <span style="font-size: 10px;color: #928cac;">Copywriting</span>
+                                <div class="container">
+                                    <div class="skills php"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="line" style="border-left: 20px solid #bdb9d8; height: 100px;"></div>
+                </div>
+
+                <div>
+                    <div class="box"
+                        style="height: 140px; width: 260px; background-color: #786ade; border-radius: 5px;">
+                        <div class="box-content">
+                            <div class="left-content">
+                                <p style="color: white; font-size: 12px;">MONTHLY GOAL <br>
+                                    <span style="color: white; font-size: 8px;">DECEMBER</span>
+                                </p>
+                                <div class="amount-box" style="padding-top: 30px; color: white">
+                                    $1.000.000
+                                </div>
+                            </div>
+
+                            <div class="right-content" style="padding-top: 12px;">
+                                <div class="weekly-box">
+                                    Weekly
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box" style="height: 130px; width: 260px;">
+                        <div class="box-content">
+                            <div class="top-right-text">
+                                <p style="color: #afaad9; font-size: 15px;">PROJECTION <br>
+                                    <span style="color: #afaad9; font-size: 8px; float: left;">January 4th</span>
+                                </p>
+                            </div>
+                            <div class="bottom-right-amount">
+                                $200
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div style="display: flex;">
+                <div class="box1">
+                    <nav class="box-nav">
+                        <span class="box-nav-text">2 <span style="font-size: 12px;">TODAY CLOSINGS</span></span>
+                        <i class="fas fa-ellipsis-v box-nav-icon"></i>
+                    </nav>
+                    <table class="box-table">
+                        <thead>
+                            <tr>
+                                <th>All</th>
+                                <th>Sample</th>
+                                <th>Sample</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="box1">
+                    <nav class="box-nav">
+                        <span class="box-nav-text">2 <span style="font-size: 12px;">TODAY CLOSINGS</span></span>
+                        <i class="fas fa-ellipsis-v box-nav-icon"></i>
+                    </nav>
+                    <table class="box-table">
+                        <thead>
+                            <tr>
+                                <th>All</th>
+                                <th>Sample</th>
+                                <th>Sample</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="box">
+            <div class="datepicker">
+                <div class="datepicker-top">
+                    <div class="btn-group">
+                    </div>
+                    <div class="month-selector">
+                        <button class="arrow"><i class="material-icons"></i></button>
+                        <span class="month-name">December 2020</span>
+                        <button class="arrow"><i class="material-icons"></i></button>
+                    </div>
+                </div>
+                <div class="datepicker-calendar">
+                    <span class="day">Mo</span>
+                    <span class="day">Tu</span>
+                    <span class="day">We</span>
+                    <span class="day">Th</span>
+                    <span class="day">Fr</span>
+                    <span class="day">Sa</span>
+                    <span class="day">Su</span>
+                    <button class="date faded">30</button>
+                    <button class="date">1</button>
+                    <button class="date">2</button>
+                    <button class="date">3</button>
+                    <button class="date">4</button>
+                    <button class="date">5</button>
+                    <button class="date">6</button>
+                    <button class="date">7</button>
+                    <button class="date">8</button>
+                    <button class="date current-day">9</button>
+                    <button class="date">10</button>
+                    <button class="date">11</button>
+                    <button class="date">12</button>
+                    <button class="date">13</button>
+                    <button class="date">14</button>
+                    <button class="date">15</button>
+                    <button class="date">16</button>
+                    <button class="date">17</button>
+                    <button class="date">18</button>
+                    <button class="date">19</button>
+                    <button class="date">20</button>
+                    <button class="date">21</button>
+                    <button class="date">22</button>
+                    <button class="date">23</button>
+                    <button class="date">24</button>
+                    <button class="date">25</button>
+                    <button class="date">26</button>
+                    <button class="date">27</button>
+                    <button class="date">28</button>
+                    <button class="date">29</button>
+                    <button class="date">30</button>
+                    <button class="date">31</button>
+                    <button class="date faded">1</button>
+                    <button class="date faded">2</button>
+                    <button class="date faded">3</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
